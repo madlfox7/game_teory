@@ -1,0 +1,63 @@
+#include <iostream>
+using namespace std;
+
+void printFlags(int flags) {
+    cout << "Осталось флажков: " << flags << endl;
+}
+
+int smartMove(int flags) {
+    int keyPositions[] = {16, 12, 8, 4};
+    for (int key : keyPositions) {
+        if (flags > key && flags - key <= 3) {
+            return flags - key; 
+        }
+    }
+    return 1;
+}
+
+int main() {
+    int flags = 21; 
+    int currentPlayer = 1; 
+    int choice;
+
+    cout << "Игра с 19 флажками. Уберите 1, 2 или 3 флажка за ход." << endl;
+    cout << "Тот, кто уберет последний флажок, побеждает!" << endl;
+
+    while (flags > 0) {
+        printFlags(flags);
+
+        if (currentPlayer == 1) {
+            cout << "Ход игрока " << currentPlayer << ". Сколько флажков убрать (1, 2 или 3)? ";
+            cin >> choice;
+
+      
+            if (choice < 1 || choice > 3) {
+                cout << "Неверный выбор. Можно убрать только 1, 2 или 3 флажка. Попробуйте снова." << endl;
+                continue;
+            }
+
+            if (choice > flags) {
+                cout << "Нельзя убрать больше флажков, чем осталось. Попробуйте снова." << endl;
+                continue;
+            }
+        } else {
+         
+            choice = smartMove(flags);
+            cout << "Умный соперник убирает " << choice << " флажков." << endl;
+        }
+
+        
+        flags -= choice;
+
+      
+        if (flags == 0) {
+            cout << "Игрок " << currentPlayer << " убрал последний флажок и победил!" << endl;
+            break;
+        }
+
+      
+        currentPlayer = (currentPlayer == 1) ? 2 : 1;
+    }
+
+    return 0;
+}
