@@ -1,0 +1,43 @@
+#include <iostream>
+using namespace std;
+
+void printFlags(int flags) {
+    cout << "Осталось флажков: " << flags << endl;
+}
+
+int main()
+ {
+    int flags = 19; 
+    int currentPlayer = 1; //A
+    int choice;
+
+    cout << "Игра с 19 флажками. Уберите 1, 2 или 3 флажка за ход." << endl;
+    cout << "Тот, кто уберет последний флажок, побеждает!" << endl;
+
+    while (flags > 0)
+     {
+        printFlags(flags);
+        cout << "Ход игрока " << currentPlayer << ". Сколько флажков убрать (1, 2 или 3)? ";
+        cin >> choice;
+
+        if (choice < 1 || choice > 3)
+{
+            cout << "Неверный выбор. Можно убрать только 1, 2 или 3 флажка. Попробуйте снова." << endl;
+            continue;
+        }
+        if (choice > flags)
+         {
+            cout << "Нельзя убрать больше флажков, чем осталось. Попробуйте снова." << endl;
+            continue;
+        }
+        flags -= choice;
+        if (flags == 0) 
+        {
+            cout << "Игрок " << currentPlayer << " убрал последний флажок и победил!" << endl;
+            break;
+        }
+        currentPlayer = (currentPlayer == 1) ? 2 : 1;
+    }
+
+    return 0;
+}
